@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { SequelizeModule } from "@nestjs/sequelize"
 import { ShopkeeperModule } from './shopkeeper/shopkeeper.module';
 import { ProductModule } from './product/product.module';
+import { TradeModule } from './trade/trade.module';
 
 @Module({
   imports: [SequelizeModule.forRoot({
@@ -16,7 +17,7 @@ import { ProductModule } from './product/product.module';
         autoLoadModels: true,
 		synchronize: true,
 
-	}),ShopkeeperModule,ProductModule],
+	}),ShopkeeperModule,ProductModule,TradeModule],
   controllers: [AppController],
   providers: [AppService],
 })

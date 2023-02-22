@@ -7,6 +7,7 @@ import { ShopkeeperService } from './shopkeeper.service';
 import { JwtModule } from "@nestjs/jwt"
 import { AuthenticateMiddleware } from './AuthenticateShop';
 import { GeneratejwtMiddleware } from './generateToken';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
     imports: [SequelizeModule.forFeature([Shopkeeper]),JwtModule.register({
@@ -14,7 +15,7 @@ import { GeneratejwtMiddleware } from './generateToken';
       signOptions: { expiresIn: "30m" }
     })],
     controllers: [ShopkeeperController],
-    providers: [ShopkeeperService],
+    providers: [ShopkeeperService,JwtStrategy],
     exports: [SequelizeModule]
   })
   export class ShopkeeperModule implements NestModule {

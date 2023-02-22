@@ -17,6 +17,22 @@ export class ProductService {
 
     return newProduct
 }
+async updateProduct(id: number, updateData: Partial<Product>): Promise<[number,Product[]]> {
+  return this.productModel.update(updateData, {
+    where: { id },
+    returning: true,
+  });
+}
+async findById(shopkeeperId: number): Promise<Product[]> {
+  return this.productModel.findAll({ where: { shopkeeperId} });
+}
+
+
+async deleteById(id: number) {
+  return await this.productModel.destroy({
+    where: { id: id }
+  })
+}
 
   
 }

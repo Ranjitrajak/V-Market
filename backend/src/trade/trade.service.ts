@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Trade } from './trade.model';
 import { TradeDto } from './tradeDto';
 import { Op } from 'sequelize';
+import { Shopkeeper } from 'src/shopkeeper/shopkeeper.model';
+import { Product } from 'src/product/product.model';
 
 @Injectable()
 export class TradeService {
@@ -21,6 +23,7 @@ async getTradeById(importedBy: number, exportedBy: number): Promise<Trade[]> {
       where: {
         [Op.or]: [{ importedBy: importedBy }, { exportedBy: exportedBy }],
       },
+      // include: [{ model: Shopkeeper, as: 'exporter' },{ model: Shopkeeper, as: 'importer' },Product]
     });
   }
 

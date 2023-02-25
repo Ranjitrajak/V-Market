@@ -32,12 +32,13 @@ async findById(id: number): Promise<Shopkeeper> {
     where: {
       id
     },
-    // include: [Trade,Product]
+    // include: [Product,Trade]
   })
+  
 }
 
 async findAll(): Promise<Shopkeeper[]> {
-  return this.shopkeeperModel.findAll()
+  return this.shopkeeperModel.findAll({include:Product})
 }
 
 

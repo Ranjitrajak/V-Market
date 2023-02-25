@@ -10,10 +10,14 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   async create(@Body() createProduct: ProductDto): Promise<Product> {
     return this.productService.create(createProduct);
   }
+
+
+  // @UseGuards(JwtAuthGuard)
 
   @Put('/:id')
   async updateUser(
@@ -26,13 +30,15 @@ export class ProductController {
     }
     return updatedUser;
   }
+
+  @UseGuards(JwtAuthGuard)
   @Get('/:shopId')
-	async getAllProduct(@Param('shopId') shopId:number) {
+	async getAllProduct(@Param('shopId',ParseIntPipe) shopId:number) {
 		return await this.productService.findById(shopId)
 	}
 
  
-  @UseGuards(JwtAuthGuard)
+ 
   @Delete('/:id')
 	async deleteCartItems(@Param('id', ParseIntPipe) id: number) {
 		return await this.productService.deleteById(id)

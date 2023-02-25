@@ -1,30 +1,41 @@
-import React ,{ FC }from 'react'
+import React, { FC, useState } from 'react';
 import {
-    
-    Box,
-    Button,
-    Card,
-    CardActionArea,
-    CardHeader,
-    CardMedia,
-  } from "@mui/material";
+
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  Typography,
+  TextField
+} from "@mui/material";
+
+import ProductType from '../types/product';
+
 import ShopType from '../types/shop';
-import Product from './Product';
+import ProductCard from './Product';
 
+type ShopProps = {
+  item: ShopType
 
-  type ShopProps = {
-	item: ShopType
-	
-}
-const products = () => {
-  alert ("Welcome to my shop")
-  
 };
 
-const Shop:FC<ShopProps> = ({item}:ShopProps): JSX.Element => {
+const Shop: FC<ShopProps> = ({ item }: ShopProps): JSX.Element => {
+  const [showProducts, setShowProducts] = useState<boolean>(false);
+
+  const handleShowProducts = () => {
+    setShowProducts(true);
+  };
+
+  const handleHideProducts = () => {
+    setShowProducts(false);
+  };
+
   return (
     <div>
-        <Card
+      <Card
         sx={{
           width: "40%",
           margin: "auto",
@@ -36,20 +47,23 @@ const Shop:FC<ShopProps> = ({item}:ShopProps): JSX.Element => {
           },
         }}
       >
-        <CardHeader
-      title =  {item.name}/>
-        <CardMedia
-          component="img"
-          height="280"
-          image={item.img}
-          alt="shopkeeper"
-        />
+        <CardHeader title={item.name} />
+        <CardMedia component="img" height="280" image={item.img} alt="shopkeeper" />
         <CardActionArea>
-            <Button onClick={products}>Show Products</Button>
+          {showProducts ? (
+            <div>
+              <Button onClick={handleHideProducts}>Hide Products</Button>
+              {item.products.map((product) => (
+                <ProductCard key={product.id} item={product} />
+              ))}
+            </div>
+          ) : (
+            <Button onClick={handleShowProducts}>Show Products</Button>
+          )}
         </CardActionArea>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Shop
+export default Shop;

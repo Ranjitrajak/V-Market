@@ -1,3 +1,5 @@
+import ProductType from "./product";
+
 export default interface ShopType {
 	id: number;
 	name: string
@@ -5,4 +7,5 @@ export default interface ShopType {
 	password: string
 	 address: string
      img:string
+	 products:ProductType[]
 }

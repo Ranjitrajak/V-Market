@@ -15,7 +15,7 @@ interface logUser {
 export class ShopkeeperController {
   constructor(private readonly shopkeeperService: ShopkeeperService) {}
 
-  @Post('/create')
+  @Post('/signup')
   async create(@Body() createShop: ShopkeeperDto): Promise<Shopkeeper> {
 	const user= await this.shopkeeperService.findByEmail(createShop.email)
 	if(user){
@@ -37,6 +37,14 @@ export class ShopkeeperController {
   @Get('/:id')
 	async getUser(@Param('id') id:number) {
 		return  await this.shopkeeperService.findById(id)
+		
+	}
+
+	
+	@UseGuards(JwtAuthGuard)
+	@Get('/email/:email')
+	async getUserByEmail(@Param('email') email: string) {
+		return  await this.shopkeeperService.findByEmail(email)
 		
 	}
  

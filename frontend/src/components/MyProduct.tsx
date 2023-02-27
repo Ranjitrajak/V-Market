@@ -60,8 +60,8 @@ const MyProduct = () => {
 
 
 			
-			const getCart = await axios.get(`http://localhost:5000/product/${ userId }`,headerConfig)
-			setResponse(getCart.data)
+			const getProduct = await axios.get(`http://localhost:5000/product/${ userId }`,headerConfig)
+			setResponse(getProduct.data)
 			
 		}
 		

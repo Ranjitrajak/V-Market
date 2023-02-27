@@ -8,10 +8,13 @@ import { JwtModule } from "@nestjs/jwt"
 import { AuthenticateMiddleware } from './AuthenticateShop';
 import { GeneratejwtMiddleware } from './generateToken';
 import { JwtStrategy } from './jwt.strategy';
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 @Module({
     imports: [SequelizeModule.forFeature([Shopkeeper]),JwtModule.register({
-      secret:'shop',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: "30m" }
     })],
     controllers: [ShopkeeperController],

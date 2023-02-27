@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete,ParseIntPipe,UseGuards,Put ,HttpException, HttpStatus, } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, UseGuards, Put, HttpException, HttpStatus, } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/shopkeeper/jwt-auth.guard';
 import { ProductDto } from './product.dto';
 import { Product } from './product.model';
@@ -8,9 +8,9 @@ import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
-  @UseGuards(JwtAuthGuard)
+  
   @Post('/create')
   async create(@Body() createProduct: ProductDto): Promise<Product> {
     return this.productService.create(createProduct);
@@ -33,14 +33,14 @@ export class ProductController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/:shopId')
-	async getAllProduct(@Param('shopId',ParseIntPipe) shopId:number) {
-		return await this.productService.findById(shopId)
-	}
+  async getAllProduct(@Param('shopId', ParseIntPipe) shopId: number) {
+    return await this.productService.findById(shopId)
+  }
 
- 
- 
+
+
   @Delete('/:id')
-	async deleteCartItems(@Param('id', ParseIntPipe) id: number) {
-		return await this.productService.deleteById(id)
-	}
+  async deleteCartItems(@Param('id', ParseIntPipe) id: number) {
+    return await this.productService.deleteById(id)
+  }
 }

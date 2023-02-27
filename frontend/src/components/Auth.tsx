@@ -1,5 +1,5 @@
-import { Box,  Typography,TextField,Button } from "@mui/material";
-import React, { useState,useContext } from "react";
+import { Box, Typography, TextField, Button } from "@mui/material";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
@@ -13,12 +13,12 @@ const Auth = () => {
     name: "",
     email: "",
     password: "",
-    img:"",
-    address :""
+    img: "",
+    address: ""
   });
   const [isSignup, setIsSignup] = useState(false);
   const { loggedIn, setLoggedIn }: any = useContext(UserContext)
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -30,10 +30,10 @@ const Auth = () => {
         name: inputs.name,
         email: inputs.email,
         password: inputs.password,
-        img:inputs.img,
-        address :inputs.address
+        img: inputs.img,
+        address: inputs.address
       });
-  
+
       if (res) {
         const data = await res.data;
         console.log(data);
@@ -44,33 +44,34 @@ const Auth = () => {
     }
   };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-  
+
     if (isSignup) {
       sendRequest("signup")
-        
-        
+
+
         .then(() => naviagte("/sign"));
-        setInputs({
-          name: "",
-          email: "",
-          password: "",
-          img:"",
-          address :""
-         })
+      setInputs({
+        name: "",
+        email: "",
+        password: "",
+        img: "",
+        address: ""
+      })
     } else {
       sendRequest()
-        .then((data) => {localStorage.setItem("accessToken", data.access_token)
-                          localStorage.setItem("userEmail", inputs.email)
-                          setLoggedIn(true)
-                         
-      })
-			           
-        
-       naviagte("/")
-      
-        
+        .then((data) => {
+          localStorage.setItem("accessToken", data.access_token)
+          localStorage.setItem("userEmail", inputs.email)
+          setLoggedIn(true)
+
+        })
+
+
+      naviagte("/")
+
+
     }
   };
   return (
@@ -98,7 +99,7 @@ const Auth = () => {
               value={inputs.name}
               placeholder="ShopName"
               margin="normal"
-              
+
             />
           )}
           <TextField
@@ -108,7 +109,7 @@ const Auth = () => {
             type={"email"}
             placeholder="Email"
             margin="normal"
-            
+
           />
           <TextField
             name="password"
@@ -117,16 +118,16 @@ const Auth = () => {
             type={"password"}
             placeholder="Password"
             margin="normal"
-           
+
           />
-           {isSignup && (
+          {isSignup && (
             <TextField
               name="img"
               onChange={handleChange}
               value={inputs.img}
               placeholder="ImageUrl"
               margin="normal"
-             
+
             />
           )}
           {isSignup && (
@@ -136,7 +137,7 @@ const Auth = () => {
               value={inputs.address}
               placeholder="Address"
               margin="normal"
-              
+
             />
           )}
           <Button
@@ -144,14 +145,14 @@ const Auth = () => {
             variant="contained"
             sx={{ borderRadius: 3, marginTop: 3 }}
             color="warning"
-           
+
           >
             Submit
           </Button>
           <Button
             onClick={() => setIsSignup(!isSignup)}
             sx={{ borderRadius: 3, marginTop: 3 }}
-           
+
           >
             Change To {isSignup ? "Login" : "Signup"}
           </Button>

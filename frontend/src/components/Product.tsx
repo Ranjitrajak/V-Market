@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
-    
-  Box,
   Button,
   Card,
-  CardActionArea,
-  CardHeader,
   CardMedia,
   CardContent,
   Typography,
@@ -14,6 +11,7 @@ import {
 
 
 import ProductType from '../types/product';
+import axios from 'axios';
 type ProductProps = {
 	item: ProductType
 	
@@ -23,6 +21,8 @@ const ProductCard: React.FC<ProductProps> = ({item}:ProductProps) => {
 
 
   const [quantity, setQuantity] = useState<number>(1);
+  const navigate = useNavigate();
+ 
   
 
 
@@ -30,8 +30,27 @@ const ProductCard: React.FC<ProductProps> = ({item}:ProductProps) => {
     setQuantity(parseInt(event.target.value));
   };
 
-  const handlePlaceOrder = () => {
-    // Handle placing the order here
+  const handlePlaceOrder =async (shopkeeperId:number,productId:number) => {
+   try{ const token = localStorage.getItem("accessToken")
+    const email = localStorage.getItem('userEmail')
+
+    const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
+    const { data } = await axios.get(`http://localhost:5000/shop/email/${ email }`, headerConfig)
+    const userId = await data.id
+    const res = await axios.post(`http://localhost:5000/trade/create`,{
+      importedBy:userId,
+      exportedBy:shopkeeperId,
+      quantity:quantity,
+      productId:productId
+      });
+      if(res){
+        navigate("/trade")
+      }
+}catch(err){
+  console.log(err);
+};
+ 
+    
   };
 
   return (
@@ -83,7 +102,7 @@ const ProductCard: React.FC<ProductProps> = ({item}:ProductProps) => {
           value={quantity}
           onChange={handleQuantityChange}
         />
-        <Button sx={{ mt: 2 }} variant="contained"  onClick={handlePlaceOrder}>
+        <Button sx={{ mt: 2 }} variant="contained"  onClick={()=>{handlePlaceOrder(item.shopkeeperId,item.id)}}>
           Export
         </Button>
       </CardContent>

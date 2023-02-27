@@ -10,7 +10,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			ignoreExpiration: false,
-			secretOrKey:'shop'
+			secretOrKey: process.env.JWT_SECRET
 		})
 	}
 	async validate (payload:any){

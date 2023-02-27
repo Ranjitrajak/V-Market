@@ -10,7 +10,7 @@ import { TradeDto } from './tradeDto';
 export class TradeController {
     constructor(private readonly tradeService: TradeService) { }
 
-    @UseGuards(JwtAuthGuard)
+    
     @Post('/create')
     async create(@Body() createTrade: TradeDto): Promise<Trade> {
         return this.tradeService.create(createTrade);
@@ -21,8 +21,8 @@ export class TradeController {
 
     async getAllTrade(@Param('id', ParseIntPipe) id: number) {
 
-        let importedBy: number = id
-        let exportedBy: number = id
+        const importedBy: number = id
+        const exportedBy: number = id
         return await this.tradeService.getTradeById(importedBy, exportedBy)
     }
 

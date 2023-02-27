@@ -1,45 +1,45 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface Inputs {
-    name:string
-    quantity:number
-    price:number
-    description:string
-    shopkeeperId:number
-    img:string
+  name: string
+  quantity: number
+  price: number
+  description: string
+  shopkeeperId: number
+  img: string
 }
 
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 
-const AddProduct= (): JSX.Element => {
+const AddProduct = (): JSX.Element => {
   const navigate = useNavigate();
-  const [ userId, setUserId ] = useState(0)
+  const [userId, setUserId] = useState(0)
   const [inputs, setInputs] = useState<Inputs>({
-    name:"",
-    quantity:0,
-    price:0,
-    description:'',
-    shopkeeperId:0,
-    img:''
+    name: "",
+    quantity: 0,
+    price: 0,
+    description: '',
+    shopkeeperId: 0,
+    img: ''
   });
 
-  useEffect (()=>{
-    async  function getShop (){
+  useEffect(() => {
+    async function getShop() {
       const token = localStorage.getItem("accessToken")
-			const email = localStorage.getItem('userEmail')
-      const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
-			const { data } = await axios.get(`http://localhost:5000/shop/email/${ email }`, headerConfig)
-			const userId = await data.id
-			setUserId(userId)
+      const email = localStorage.getItem('userEmail')
+      const headerConfig = { headers: { Authorization: `Bearer ${token}` } }
+      const { data } = await axios.get(`http://localhost:5000/shop/email/${email}`, headerConfig)
+      const userId = await data.id
+      setUserId(userId)
 
     }
     getShop()
-    
 
-  },[])
+
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputs((prevState) => ({
@@ -49,34 +49,34 @@ const AddProduct= (): JSX.Element => {
   };
 
   const sendRequest = async (): Promise<any> => {
-    try{
-        const res = await axios.post("http://localhost:5000/product/create", {
-            name: inputs.name,
-            description: inputs.description,
-            img: inputs.img,
-            price:inputs.price,
-            shopkeeperId:userId,
-            quantity:inputs.quantity,
-      
-          
-          })
-          if (res) {
-            const data = await res.data;
-            
-            return data
-           
-          }
+    try {
+      const res = await axios.post("http://localhost:5000/product/create", {
+        name: inputs.name,
+        description: inputs.description,
+        img: inputs.img,
+        price: inputs.price,
+        shopkeeperId: userId,
+        quantity: inputs.quantity,
+
+
+      })
+      if (res) {
+        const data = await res.data;
+
+        return data
+
+      }
 
     }
     catch (err) {
-        console.log(err);
-      }
-    
+      console.log(err);
+    }
+
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(inputs);
+
     sendRequest()
       .then((data) => console.log(data))
       .then(() => navigate("/"));
@@ -122,7 +122,7 @@ const AddProduct= (): JSX.Element => {
             margin="none"
             variant="outlined"
           />
-           <InputLabel sx={labelStyles}>Price</InputLabel>
+          <InputLabel sx={labelStyles}>Price</InputLabel>
           <TextField
             name="price"
             onChange={handleChange}
@@ -146,7 +146,7 @@ const AddProduct= (): JSX.Element => {
             margin="none"
             variant="outlined"
           />
-          
+
           <Button
             sx={{ mt: 2, borderRadius: 4 }}
             variant="contained"

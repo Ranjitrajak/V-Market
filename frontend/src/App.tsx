@@ -9,6 +9,7 @@ import UserContext from './UserContext'
 import Auth from './components/Auth';
 import MyProduct from './components/MyProduct';
 import ProductEdit from './components/Edit';
+import Trade from './components/Trade';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -29,6 +30,7 @@ function App() {
          <Route path="/add" element={<AddProduct />} />
          <Route path="/products" element={<MyProduct />} />
          <Route path="/update/:id" element={<ProductEdit/>} />
+         <Route path="/trade" element={<Trade/>}/>
          
           </>)}
     

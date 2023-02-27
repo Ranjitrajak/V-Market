@@ -1,5 +1,5 @@
 import React, { useState,useContext } from 'react';
-import { AppBar, Toolbar, Box, Tabs, Tab,Button } from '@mui/material';
+import { AppBar, Typography, Toolbar, Box, Tabs, Tab,Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import UserContext from '../UserContext';
 
@@ -13,6 +13,7 @@ const Header: React.FC = () => {
 
   return (
     <AppBar position="sticky" sx={{ background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,121,112,1) 35%, rgba(0,212,255,1) 100%)' }}>
+      
       <Toolbar>
         {loggedIn && (
           <Box display="flex" marginLeft="auto" marginRight="auto">
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
                 component={Link}
                 to="/auth"
                 variant="contained"
-                sx={{ margin: 1, borderRadius: 10 }}
+                sx={{ margin:1, borderRadius: 10 }}
                 color="warning"
               >
                 Login

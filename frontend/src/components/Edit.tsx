@@ -5,29 +5,29 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 interface Inputs {
-    [key: string]: string | number; 
-    name:string
-    quantity:number
-    price:number
-    description:string
-    shopkeeperId:number
-    img:string
+  [key: string]: string | number;
+  name: string
+  quantity: number
+  price: number
+  description: string
+  shopkeeperId: number
+  img: string
 }
 
 const ProductEdit = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState<Inputs>({
-    name:"",
-    quantity:0,
-    price:0,
-    description:'',
-    shopkeeperId:0,
-    img:''
+    name: "",
+    quantity: 0,
+    price: 0,
+    description: '',
+    shopkeeperId: 0,
+    img: ''
   });
-  const [updatedFields, setUpdatedFields] = useState<string []>([]);
+  const [updatedFields, setUpdatedFields] = useState<string[]>([]);
   const id = useParams().id;
 
- 
+
   const handleChange = (e: any) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
@@ -55,17 +55,19 @@ const ProductEdit = () => {
     }
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+
     e.preventDefault();
-    console.log(inputs);
+   
     sendRequest()
       .then((data) => console.log(data))
       .then(() => navigate("/"));
+      
   };
-  
+
 
   return (
     <div>
-       <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Box
           border={3}
           borderColor="linear-gradient(90deg, rgba(58,75,180,1) 2%, rgba(116,49,110,1) 36%, rgba(2,0,161,1) 73%, rgba(69,92,252,1) 100%)"
@@ -103,7 +105,7 @@ const ProductEdit = () => {
             margin="none"
             variant="outlined"
           />
-           <InputLabel sx={labelStyles}>Price</InputLabel>
+          <InputLabel sx={labelStyles}>Price</InputLabel>
           <TextField
             name="price"
             onChange={handleChange}
@@ -127,7 +129,7 @@ const ProductEdit = () => {
             margin="none"
             variant="outlined"
           />
-          
+
           <Button
             sx={{ mt: 2, borderRadius: 4 }}
             variant="contained"

@@ -4,6 +4,7 @@ import { Injectable } from "@nestjs/common"
 import { ShopkeeperService } from "./shopkeeper.service"
 import { Shopkeeper } from "./shopkeeper.model"
 
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
 	constructor(private readonly shopService:ShopkeeperService){

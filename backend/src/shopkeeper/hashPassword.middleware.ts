@@ -1,19 +1,19 @@
-import { Injectable, NestMiddleware } from "@nestjs/common"
-import { NextFunction, Request, Response } from "express"
-
-import * as bcrypt from 'bcrypt'
-
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { hash } from 'bcrypt';
 
 @Injectable()
-export class HashPasswordMiddleware implements NestMiddleware {
-	private salt = 10
-	
-	async use(req: Request, res: Response, next: NextFunction) {
-		const inPassword = req.body.password
-		
-		req.body.password = await bcrypt.hash(inPassword, this.salt)
-		
-		next()
-	}
-	
+export class HashPasswordInterceptor implements NestInterceptor {
+  async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
+    const request = context.switchToHttp().getRequest();
+    if (request.body.password) {
+      request.body.password = await hash(request.body.password, 10);
+    }
+    return next.handle().pipe(
+      map((data) => {
+        return data;
+      }),
+    );
+  }
 }

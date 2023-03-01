@@ -16,7 +16,7 @@ export class TradeController {
         return this.tradeService.create(createTrade);
     }
 
-    @UseGuards(JwtAuthGuard)
+    
     @Get('/:id')
 
     async getAllTrade(@Param('id', ParseIntPipe) id: number) {

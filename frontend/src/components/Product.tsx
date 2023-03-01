@@ -12,6 +12,7 @@ import {
 
 import ProductType from '../types/product';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 type ProductProps = {
 	item: ProductType
 	
@@ -31,12 +32,15 @@ const ProductCard: React.FC<ProductProps> = ({item}:ProductProps) => {
   };
 
   const handlePlaceOrder =async (shopkeeperId:number,productId:number) => {
-   try{ const token = localStorage.getItem("accessToken")
-    const email = localStorage.getItem('userEmail')
+   try{ const token:any = localStorage.getItem("accessToken")
+        
+       const decodedToken: any = jwt_decode(token);
+       const userId: string = decodedToken.id;
+        
 
-    const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
-    const { data } = await axios.get(`http://localhost:5000/shop/email/${ email }`, headerConfig)
-    const userId = await data.id
+    // const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
+   
+    
     const res = await axios.post(`http://localhost:5000/trade/create`,{
       importedBy:userId,
       exportedBy:shopkeeperId,

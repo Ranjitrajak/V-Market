@@ -1,18 +1,11 @@
 import React, { FC, useState } from 'react';
 import {
-
-  Box,
   Button,
   Card,
   CardActionArea,
   CardHeader,
   CardMedia,
-  CardContent,
-  Typography,
-  TextField
 } from "@mui/material";
-
-import ProductType from '../types/product';
 
 import ShopType from '../types/shop';
 import ProductCard from './Product';

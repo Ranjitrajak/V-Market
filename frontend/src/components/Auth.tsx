@@ -18,7 +18,7 @@ const Auth = () => {
   });
   const [isSignup, setIsSignup] = useState(false);
   const { loggedIn, setLoggedIn }: any = useContext(UserContext)
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -44,7 +44,7 @@ const Auth = () => {
     }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isSignup) {
@@ -63,7 +63,6 @@ const Auth = () => {
       sendRequest()
         .then((data) => {
           localStorage.setItem("accessToken", data.access_token)
-          localStorage.setItem("userEmail", inputs.email)
           setLoggedIn(true)
 
         })

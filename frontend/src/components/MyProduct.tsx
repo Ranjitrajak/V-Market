@@ -2,30 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import {
 
     Box,
-    Button,
     Card,
     CardActionArea,
     CardHeader,
     CardMedia,
     IconButton,
-    CardContent,
     Typography,
-    TextField
+
   } from "@mui/material";
   import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
   import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
   
 import ProductType from '../types/product';
-import ProductCard from "./Product";
+
 
 
 
 const MyProduct = () => {
     const [ response, setResponse ] = useState<ProductType[]>([])
-    const [ userId, setUserId ] = useState(0)
+    const [ userId, setUserId ] = useState('')
     const navigate = useNavigate();
 
     const handleEdit = (id:any) => {
@@ -50,17 +49,16 @@ const MyProduct = () => {
     
 	useEffect(() => {
 		async function getProductItems() {
-			const token = localStorage.getItem("accessToken")
-			const email = localStorage.getItem('userEmail')
 
-			const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
-			const { data } = await axios.get(`http://localhost:5000/shop/email/${ email }`, headerConfig)
-			const userId = await data.id
+			const token:any= localStorage.getItem("accessToken")
+     
+      const decodedToken: any = jwt_decode(token);
+      const userId: string = decodedToken.id;
 			setUserId(userId)
 
 
 			
-			const getProduct = await axios.get(`http://localhost:5000/product/${ userId }`,headerConfig)
+			const getProduct = await axios.get(`http://localhost:5000/product/${ userId }`)
 			setResponse(getProduct.data)
 			
 		}

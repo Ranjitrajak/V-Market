@@ -1,5 +1,6 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +17,7 @@ const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 
 const AddProduct = (): JSX.Element => {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(0)
+  const [userId, setUserId] = useState('')
   const [inputs, setInputs] = useState<Inputs>({
     name: "",
     quantity: 0,
@@ -28,12 +29,11 @@ const AddProduct = (): JSX.Element => {
 
   useEffect(() => {
     async function getShop() {
-      const token = localStorage.getItem("accessToken")
-      const email = localStorage.getItem('userEmail')
-      const headerConfig = { headers: { Authorization: `Bearer ${token}` } }
-      const { data } = await axios.get(`http://localhost:5000/shop/email/${email}`, headerConfig)
-      const userId = await data.id
-      setUserId(userId)
+      const token:any= localStorage.getItem("accessToken")
+     
+      const decodedToken: any = jwt_decode(token);
+      const userId: string = decodedToken.id;
+			setUserId(userId)
 
     }
     getShop()

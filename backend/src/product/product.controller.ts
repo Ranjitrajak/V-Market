@@ -10,7 +10,7 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
 
-  
+
   @Post('/create')
   async create(@Body() createProduct: ProductDto): Promise<Product> {
     return this.productService.create(createProduct);
@@ -31,7 +31,7 @@ export class ProductController {
     return updatedUser;
   }
 
-  @UseGuards(JwtAuthGuard)
+  
   @Get('/:shopId')
   async getAllProduct(@Param('shopId', ParseIntPipe) shopId: number) {
     return await this.productService.findById(shopId)

@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React , { FC,useEffect, useState }from 'react'
 import ShopType from '../types/shop'
-import ProductCard from './Product'
 import Shop from './shop'
 
 const Shops : FC = (): JSX.Element=> {
@@ -25,10 +24,7 @@ const Shops : FC = (): JSX.Element=> {
 					})
 				}
     </div>
-    <div>
-   
-
-    </div>
+    
     </>
     
   )
